@@ -12,8 +12,8 @@ Team Contract:
 4. Try to add comments explaining what purpose each part of the code serves. Ideally, each file should have at least one comment explaining what the file does and how it should connect to other files; feel free to add further elaboration on smaller sections of code inside the file.
 
 Signatures:
-Robert Theron McCrady
 
+Robert Theron McCrady
 
 Frederico Duarte Del Nero, Monday Oct 19 
 
