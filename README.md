@@ -11,6 +11,8 @@ Team Contract:
 
 4. Try to add comments explaining what purpose each part of the code serves. Ideally, each file should have at least one comment explaining what the file does and how it should connect to other files; feel free to add further elaboration on smaller sections of code inside the file.
 
+===========================================================================================
+
 Signatures:
 
 Robert Theron McCrady
@@ -20,3 +22,16 @@ Frederico Duarte Del Nero, Monday Oct 19
 Alexander Hoyt
 
 Momthahina Meem
+
+===========================================================================================
+
+Responsibilities:
+
+  **Frederico Del Nero**: I commit myself to take responsibility of the **Client Interfacer** and help Meem with **Beta Test Organizer**. On top of it, I will keep my teammates updated, meet agreed-upon deadlines, and communicate any challenges well in advanced so we can ajdust things and stay on all together.  - 10/28/26
+
+
+
+
+
+
+
