@@ -29,6 +29,7 @@ Responsibilities:
 
   **Frederico Del Nero**: I commit myself to take responsibility of the **Client Interfacer** and help Meem with **Beta Test Organizer**. On top of it, I will keep my teammates updated, meet agreed-upon deadlines, and communicate any challenges well in advanced so we can ajdust things and stay on all together.  - 10/28/26
 
+  **Alexander Hoyt**: I will commit myself to be *Unit & Integration Tester*. I will write effecient tests to ensure the behavior of individual and combined modules act as expected in multiple possible situations. I will also be a part of the backend development side of the app working with the data structures and sensors required for the functionality. - 10/28/26
 
 
 
