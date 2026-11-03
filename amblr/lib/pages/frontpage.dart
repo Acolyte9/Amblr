@@ -40,7 +40,22 @@ class Frontpage extends StatelessWidget {
                 },
                 child: const Text('Start Walking Brainstorming'),
               ),
-              const SizedBox(height: 24),
+
+              const SizedBox(height: 60),
+
+              Container(
+                width: 300,
+                height: 1,
+                color: Colors.white.withOpacity(0.5),
+                padding: const EdgeInsets.all(16),
+              ),
+              const Text(
+                'Recent Brainstorms',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 48, 74, 1),
+                ),
+              ),
 
               Expanded(
                 child: Container(
