@@ -1,43 +1,58 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Frontpage extends StatelessWidget {
+  const Frontpage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.blue,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            textStyle: const TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
       home: Scaffold(
-        appBar: buildAppBar(),
-        body: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [Text('Welcome to Amblr!')],
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/FirstPicExample.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 150),
+              const Text(
+                'Amblr',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(fixedSize: const Size(300, 60)),
+                onPressed: () {
+                  // Handle button press
+                },
+                child: const Text('Start Walking Brainstorming'),
+              ),
+              Expanded(
+                child: CarouselView.weighted(
+                  scrollDirection: Axis.vertical,
+                  flexWeights: const <int>[1],
+                  children: List<Widget>.generate(10, (int index) {
+                    return Center(child: Text('Item $index'));
+                  }),
                 ),
               ),
-            ),
-            Image.asset('assets/FirstPicExample.jpg'),
-          ],
-        ),
-        floatingActionButton: Center(
-          child: FloatingActionButton(
-            onPressed: () {
-              // Handle button press
-            },
-            child: const Icon(Icons.add),
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-AppBar buildAppBar() {
-  return AppBar(title: const Text('Amblr'));
 }
