@@ -6,7 +6,10 @@ class Walkingpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New Brainstorming')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('New Brainstorming'),
+      ),
       body: const Center(child: Text('Walking = recording')),
     );
   }
