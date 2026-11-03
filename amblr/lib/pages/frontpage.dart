@@ -40,13 +40,74 @@ class Frontpage extends StatelessWidget {
                 },
                 child: const Text('Start Walking Brainstorming'),
               ),
+              const SizedBox(height: 24),
+
               Expanded(
-                child: CarouselView.weighted(
-                  scrollDirection: Axis.vertical,
-                  flexWeights: const <int>[1],
-                  children: List<Widget>.generate(10, (int index) {
-                    return Center(child: Text('Item $index'));
-                  }),
+                child: Container(
+                  color: Colors.white.withOpacity(0.4),
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.lightbulb_outline),
+                          title: Text('Ideas'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.chat_bubble_outline),
+                          title: Text('Chat'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.school_outlined),
+                          title: Text('Recent brainstorms'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.history),
+                          title: Text('History'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.person),
+                          title: Text('Profile'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.help_outline),
+                          title: Text('Help'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(Icons.settings),
+                          title: Text('Settings'),
+                          subtitle: Text('Amblr Amblr Amblr'),
+                          trailing: Icon(Icons.chevron_right),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
