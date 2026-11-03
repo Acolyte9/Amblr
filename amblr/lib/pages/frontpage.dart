@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'walkingpage.dart';
+
 class Frontpage extends StatelessWidget {
   const Frontpage({super.key});
 
@@ -40,7 +42,12 @@ class Frontpage extends StatelessWidget {
                   foregroundColor: Colors.green,
                 ),
                 onPressed: () {
-                  // Handle button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Walkingpage(),
+                    ),
+                  );
                 },
                 child: const Text('Start Walking Brainstorming'),
               ),
