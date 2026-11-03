@@ -62,7 +62,6 @@ class Frontpage extends StatelessWidget {
                   color: Colors.white.withOpacity(0.4),
                   child: ListView(
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
                     children: const [
                       Card(
                         child: ListTile(
