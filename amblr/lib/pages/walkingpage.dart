@@ -65,7 +65,9 @@ class _WalkingpageState extends State<Walkingpage> {
           ),
         );
       }
-      else {
+    }
+    else {
+      if (pauseup = true) {
         pauseup = false;
         // _pausedisplay.unpause();
         Navigator.pop(context);
