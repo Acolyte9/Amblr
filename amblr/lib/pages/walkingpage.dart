@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -8,18 +9,20 @@ import 'package:amblr/widgets/pausedisplay.dart';
 class Walkingpage extends StatefulWidget {
   Walkingpage({super.key});
   
-  Accelcheck accelCheck = Accelcheck();
+  Accelcheck accelcheck = Accelcheck();
 
   @override
-  State<Walkingpage> createState() => _WalkingpageState();
+  State<Walkingpage> createState() => _WalkingpageState(accelcheck);
 }
 
 class _WalkingpageState extends State<Walkingpage> {
-  _WalkingpageState(this.accelCheck);
+  _WalkingpageState(this.accelcheck);
   List<AccelerometerEvent> _accelerometerValues = [];
   late Timer _timer;
 
-  Accelcheck? accelCheck;
+  late bool pauseup = false;
+  Accelcheck? accelcheck;
+  late final AmblrPauseDisplay _pausedisplay;
 
   // StreamSubscription for accelerometer events
   late StreamSubscription<AccelerometerEvent> _accelerometerSubscription;
@@ -27,6 +30,9 @@ class _WalkingpageState extends State<Walkingpage> {
   @override
   void initState() {
     super.initState();
+    _pausedisplay = AmblrPauseDisplay(
+      // accelcheck: accelcheck
+      );
 
     // Subscribe to accelerometer events
     _accelerometerSubscription = accelerometerEventStream().listen((event) {
@@ -45,13 +51,25 @@ class _WalkingpageState extends State<Walkingpage> {
 
   void _checkAccel() {
     if (_accelerometerValues.isNotEmpty) {
-      accelCheck!.accelUpdate(_accelerometerValues[0].x, _accelerometerValues[0].y, _accelerometerValues[0].z);
+      accelcheck!.accelUpdate(_accelerometerValues[0].x, _accelerometerValues[0].y, _accelerometerValues[0].z);
     }
-    if (accelCheck!.isStill()) {
-      Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => AmblrPauseDisplay(accelCheck)),
+    if (accelcheck!.isStill()) {
+      if (pauseup = false) {
+        pauseup = true;
+        Navigator.push(
+          context, 
+          MaterialPageRoute(
+            builder: (context) {
+              return _pausedisplay;
+            }
+          ),
         );
+      }
+      else {
+        pauseup = false;
+        // _pausedisplay.unpause();
+        Navigator.pop(context);
+      }
     }
   }
 
