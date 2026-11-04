@@ -1,4 +1,5 @@
 import 'dart:async';
+
 // import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -8,20 +9,18 @@ import 'package:amblr/widgets/pausedisplay.dart';
 
 class Walkingpage extends StatefulWidget {
   Walkingpage({super.key});
-  
-  Accelcheck accelcheck = Accelcheck();
 
   @override
-  State<Walkingpage> createState() => _WalkingpageState(accelcheck);
+  State<Walkingpage> createState() => _WalkingpageState();
 }
 
 class _WalkingpageState extends State<Walkingpage> {
-  _WalkingpageState(this.accelcheck);
-  List<AccelerometerEvent> _accelerometerValues = [];
-  late Timer _timer;
+  final Accelcheck accelcheck = Accelcheck();
+
+  AccelerometerEvent? _latestAccelerometerEvent;
 
   late bool pauseup = false;
-  Accelcheck? accelcheck;
+  late Timer _timer;
   late final AmblrPauseDisplay _pausedisplay;
 
   // StreamSubscription for accelerometer events
@@ -32,13 +31,12 @@ class _WalkingpageState extends State<Walkingpage> {
     super.initState();
     _pausedisplay = AmblrPauseDisplay(
       // accelcheck: accelcheck
-      );
+    );
 
     // Subscribe to accelerometer events
     _accelerometerSubscription = accelerometerEventStream().listen((event) {
       setState(() {
-        // Update the _accelerometerValues list with the latest event
-        _accelerometerValues = [event];
+        _latestAccelerometerEvent = event;
       });
     });
 
@@ -50,23 +48,23 @@ class _WalkingpageState extends State<Walkingpage> {
   }
 
   void _checkAccel() {
-    if (_accelerometerValues.isNotEmpty) {
-      accelcheck!.accelUpdate(_accelerometerValues[0].x, _accelerometerValues[0].y, _accelerometerValues[0].z);
+    final event = _latestAccelerometerEvent;
+    if (event != null) {
+      accelcheck!.accelUpdate(event.x, event.y, event.z);
     }
     if (accelcheck!.isStill()) {
       if (pauseup = false) {
         pauseup = true;
         Navigator.push(
-          context, 
+          context,
           MaterialPageRoute(
             builder: (context) {
               return _pausedisplay;
-            }
+            },
           ),
         );
       }
-    }
-    else {
+    } else {
       if (pauseup = true) {
         pauseup = false;
         // _pausedisplay.unpause();

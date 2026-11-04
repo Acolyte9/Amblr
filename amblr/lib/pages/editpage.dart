@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class DocumentEditorScreen extends StatefulWidget {
@@ -17,16 +16,18 @@ class DocumentEditorScreen extends StatefulWidget {
   }
 }
 
-class _DocumentEditorScreenState
-    extends State<DocumentEditorScreen> {
+class _DocumentEditorScreenState extends State<DocumentEditorScreen> {
   // final DocumentStorage storage = DocumentStorage();
-  final TextEditingController titleController =
-      TextEditingController();
-  final TextEditingController textController =
-      TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
 
-  bool hasLoadedDocument = false;
   bool isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    titleController.text = widget.documentName;
+  }
 
   @override
   void dispose() {
@@ -42,6 +43,7 @@ class _DocumentEditorScreenState
     final title = titleController.text.trim().isEmpty
         ? 'Untitled Document'
         : titleController.text.trim();
+    titleController.text = title;
 
     // try {
     //   await storage.updateDocument(
@@ -74,72 +76,38 @@ class _DocumentEditorScreenState
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<TextDocument>(
-      // stream: storage.watchDocument(widget.documentId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Scaffold(
-            appBar: AppBar(title: Text(widget.documentName)),
-            body: Center(
-              child: Text('Could not load document: ${snapshot.error}'),
-            ),
-          );
-        }
-
-        if (!snapshot.hasData) {
-          return Scaffold(
-            appBar: AppBar(title: Text(widget.documentName)),
-            body: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-
-        final document = snapshot.data!;
-
-        if (!hasLoadedDocument) {
-          titleController.text = document.title;
-          textController.text = document.content;
-          hasLoadedDocument = true;
-        }
-
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 200, 255, 200),
-            title: TextField(
-              controller: titleController,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-              decoration: const InputDecoration(
-                hintText: 'Untitled Document',
-                border: InputBorder.none,
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: isSaving ? null : saveDocument,
-                icon: const Icon(Icons.save),
-                tooltip: 'Save document',
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 200, 255, 200),
+        title: TextField(
+          controller: titleController,
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          decoration: const InputDecoration(
+            hintText: 'Untitled Document',
+            border: InputBorder.none,
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: textController,
-              maxLines: null,
-              expands: true,
-              textAlignVertical: TextAlignVertical.top,
-              decoration: const InputDecoration(
-                hintText: 'Start writing your document...',
-                border: OutlineInputBorder(),
-              ),
-            ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: isSaving ? null : saveDocument,
+            icon: const Icon(Icons.save),
+            tooltip: 'Save document',
           ),
-        );
-      },
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: TextField(
+          controller: textController,
+          maxLines: null,
+          expands: true,
+          textAlignVertical: TextAlignVertical.top,
+          decoration: const InputDecoration(
+            hintText: 'Start writing your document...',
+            border: OutlineInputBorder(),
+          ),
+        ),
+      ),
     );
   }
 }

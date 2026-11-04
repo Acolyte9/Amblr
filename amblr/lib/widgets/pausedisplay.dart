@@ -22,6 +22,11 @@ class AmblrPauseDisplay extends StatefulWidget {
 
 class PauseDisplayState extends State<AmblrPauseDisplay> {
   // late Timer _timer;
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Paused'));
+  }
   
   // void unpause() {
   //   Navigator.pop(context);
