@@ -23,8 +23,7 @@ class StorageHandler {
       return db;
     }
 
-
-    Future<void> insert(Note note) async {
+    static Future<void> insert(Note note) async {
       await db.insert(
         'notes',
         note.toMap(),
@@ -32,7 +31,7 @@ class StorageHandler {
       );
     }
 
-    Future<List<Note>> getNotes() async {
+    static Future<List<Note>> getNotes() async {
       final List<Map<String, Object?>> notes = await db.query('notes');
       return [
         for(final {'title': title as String, 'body': body as String} in notes)
@@ -40,7 +39,7 @@ class StorageHandler {
       ];
     }
 
-    Future<void> update(Note note) async {
+    static Future<void> update(Note note) async {
       await db.update(
         'notes',
         note.toMap(),
@@ -49,7 +48,7 @@ class StorageHandler {
       );
     }
 
-    Future<void> delete(Note note) async {
+    static Future<void> delete(Note note) async {
       await db.delete(
         'notes',
         where: 'title = ?',
