@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amblr/objects/notes.dart';
+import 'package:amblr/objects/note.dart';
 import 'package:amblr/widgets/deletecheck.dart';
 
 // Screen that shows all saved walk notes in a scrolling list.

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'lib/widgets/deletecheck.dart'
+// import 'package:flutter/material.dart';
+// import 'package:amblr/widgets/deletecheck.dart';
 
-class Notes{
+class Note{
   //constructor
-  const Notes ({
+  const Note ({
     required this.id,
     required this.title,
     required this.text,
