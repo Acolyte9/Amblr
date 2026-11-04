@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:amblr/objects/note.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -34,8 +34,8 @@ class StorageHandler {
     static Future<List<Note>> getNotes() async {
       final List<Map<String, Object?>> notes = await db.query('notes');
       return [
-        for(final {'title': title as String, 'body': body as String} in notes)
-          Note(title: title, body: body),
+        for(final {'id': id as String, 'title': title as String, 'body': body as String} in notes)
+          Note(id: id, title: title, body: body),
       ];
     }
 
@@ -57,13 +57,13 @@ class StorageHandler {
     }
 }
 
-class Note {
-  final String title;
-  final String body;
+// class Note {
+//   final String title;
+//   final String body;
 
-  Note({required this.title, required this.body});
+//   Note({required this.title, required this.body});
 
-  Map<String, Object?> toMap() {
-    return {'title': title, 'body': body};
-  }
-}
+//   Map<String, Object?> toMap() {
+//     return {'title': title, 'body': body};
+//   }
+// }

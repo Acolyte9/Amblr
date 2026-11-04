@@ -6,17 +6,20 @@ class Note{
   const Note ({
     required this.id,
     required this.title,
-    required this.text,
-    required this.timeRange,
-    required this.date,
+    required this.body,
+    // required this.timeRange,
+    // required this.date,
   });
 
   final String id;
   final String title;
-  final String text;
-  final String timeRange;
-  final String date;
+  final String body;
+  // final String timeRange;
+  // final String date;
 
+  Map<String, Object?> toMap() {
+    return {'title': title, 'body': body};
+  }
 }
 
 //time range

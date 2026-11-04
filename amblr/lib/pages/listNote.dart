@@ -1,13 +1,16 @@
+import 'package:amblr/objects/storagehandler.dart';
 import 'package:flutter/material.dart';
 import 'package:amblr/objects/note.dart';
 import 'package:amblr/widgets/deletecheck.dart';
 
 // Screen that shows all saved walk notes in a scrolling list.
 class NotesList extends StatefulWidget {
-  const NotesList({super.key});
+  NotesList({super.key});
+  
+  StorageHandler storage = StorageHandler();
 
   @override
-  State<NotesList> createState() => _NotesListState();
+  State<NotesList> createState() => _NotesListState(storage);
 }
 
 class _NotesListState extends State<NotesList> {
@@ -16,22 +19,28 @@ class _NotesListState extends State<NotesList> {
     const Note(
         id: "1",
         title: "Walk by the lake",
-        text: "Ideas for my essay intro...",
-        date: "Nov 2, 2026",
-        timeRange: "3:10 - 5:00 PM"),
+        body: "Ideas for my essay intro...",
+        // date: "Nov 2, 2026",
+        // timeRange: "3:10 - 5:00 PM"
+        ),
     const Note(
         id: "2",
         title: "Morning Walk",
-        text: "Thoughts on the project...",
-        date: "Nov 1, 2026",
-        timeRange: "8:00 - 9:20 AM"),
+        body: "Thoughts on the project...",
+        // date: "Nov 1, 2026",
+        // timeRange: "8:00 - 9:20 AM"
+        ),
   ];
+
+  _NotesListState(StorageHandler storage);
+  
+  late StorageHandler storage;
 
   void _openDeleteDialog(Note note) {
     showDialog(
       context: context,
       builder: (_) {
-        return AmblrDeleteCheck(id: note.id);
+        return AmblrDeleteCheck(id: note.id, storage: storage,);
       },
     );
   }
@@ -55,7 +64,7 @@ class _NotesListState extends State<NotesList> {
                 child: Icon(Icons.directions_walk, color: Colors.white),
               ),
               title: Text(note.title),
-              subtitle: Text('${note.date}  •  ${note.timeRange}'),
+              // subtitle: Text('${note.date}  •  ${note.timeRange}'),
               onTap: () {
                 // Later: open the note to view and edit it
               },
