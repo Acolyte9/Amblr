@@ -1,4 +1,5 @@
 // import 'package:to_dont_list/objects/item.dart';
+import 'package:amblr/objects/storagehandler.dart';
 import 'package:flutter/material.dart';
 
 // typedef ToDoListDeletedCallback = Function(
@@ -9,10 +10,11 @@ class AmblrDeleteCheck extends StatefulWidget {
   const AmblrDeleteCheck({
     super.key,
     required this.id,
-    // required (SOME KIND OF LIST OF FILES OR WAY TO INTERACT WITH SAVED FILES)
+    required this.storage,
   });
 
   final String id;
+  final StorageHandler storage;
   // final (SOME KIND OF LIST OF FILES OR WAY TO INTERACT WITH SAVED FILES);
 
   @override
@@ -33,15 +35,6 @@ class _AmblrDeleteCheckState extends State<AmblrDeleteCheck> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Delete Item?'),
-      // content: TextField(
-      //   onChanged: (value) {
-      //     setState(() {
-      //       valueText = value;
-      //     });
-      //   },
-      //   controller: _inputController,
-      //   decoration: const InputDecoration(hintText: "type something here"),
-      // ),
       actions: <Widget>[
         ElevatedButton(
           key: const Key("CancelButton"),
