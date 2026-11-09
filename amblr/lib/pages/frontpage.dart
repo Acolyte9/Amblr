@@ -44,9 +44,7 @@ class Frontpage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => Walkingpage(),
-                    ),
+                    MaterialPageRoute(builder: (context) => Walkingpage()),
                   );
                 },
                 child: const Text('Start Walking Brainstorming'),
@@ -73,74 +71,6 @@ class Frontpage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           color: Color.fromARGB(255, 48, 74, 1),
-                        ),
-                      ),
-
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.all(16),
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: const [
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.lightbulb_outline),
-                                  title: Text('Ideas'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.chat_bubble_outline),
-                                  title: Text('Chat'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.school_outlined),
-                                  title: Text('Recent brainstorms'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.history),
-                                  title: Text('History'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.person),
-                                  title: Text('Profile'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.help_outline),
-                                  title: Text('Help'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.settings),
-                                  title: Text('Settings'),
-                                  subtitle: Text('Amblr Amblr Amblr'),
-                                  trailing: Icon(Icons.chevron_right),
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                       ),
                     ],
