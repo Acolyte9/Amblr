@@ -37,6 +37,8 @@ void main() {
       final note = Note(
         title: 'Test Note',
         body: 'This is a test',
+        created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)
       );
 
       final id = await storage.insert(note);
@@ -54,11 +56,13 @@ void main() {
 
     test('Insert multiple notes', () async {
       await storage.insert(
-        Note(title: 'Note 1', body: 'Body 1'),
+        Note(title: 'Note 1', body: 'Body 1', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
       );
 
       await storage.insert(
-        Note(title: 'Note 2', body: 'Body 2'),
+        Note(title: 'Note 2', body: 'Body 2', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
       );
 
       final notes = await storage.getNotes();
@@ -70,13 +74,16 @@ void main() {
 
     test('Update an existing note', () async {
       final id = await storage.insert(
-        Note(title: 'Original', body: 'Original body'),
+        Note(title: 'Original', body: 'Original body', created: DateTime.utc(2026), modified: DateTime.utc(2026)),
       );
 
       final updatedNote = Note(
         id: id,
         title: 'Updated',
         body: 'Updated body',
+        created: DateTime.utc(2026), 
+        modified: DateTime.utc(2026)
+
       );
 
       final rowsUpdated = await storage.update(updatedNote);
@@ -93,7 +100,8 @@ void main() {
 
     test('Delete an existing note', () async {
       final id = await storage.insert(
-        Note(title: 'Delete me', body: 'Temporary'),
+        Note(title: 'Delete me', body: 'Temporary', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
       );
 
       final rowsDeleted = await storage.delete(
@@ -114,11 +122,13 @@ void main() {
     test('Multiple notes with the same title remain independent',
         () async {
       final firstId = await storage.insert(
-        Note(title: 'Duplicate', body: 'First body'),
+        Note(title: 'Duplicate', body: 'First body', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
       );
 
       final secondId = await storage.insert(
-        Note(title: 'Duplicate', body: 'Second body'),
+        Note(title: 'Duplicate', body: 'Second body', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
       );
 
       await storage.delete(
@@ -126,6 +136,8 @@ void main() {
           id: firstId,
           title: 'Duplicate',
           body: 'First body',
+          created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)
         ),
       );
 
@@ -142,6 +154,8 @@ void main() {
           id: 999,
           title: 'Missing',
           body: 'Does not exist',
+          created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)
         ),
       );
 
@@ -154,6 +168,8 @@ void main() {
           id: 999,
           title: 'Missing',
           body: 'Does not exist',
+          created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)
         ),
       );
 
@@ -163,7 +179,8 @@ void main() {
     test('Updating a note without an ID throws an error', () async {
       expect(
         () => storage.update(
-          Note(title: 'Missing ID', body: 'Test'),
+          Note(title: 'Missing ID', body: 'Test', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
         ),
         throwsArgumentError,
       );
@@ -172,7 +189,8 @@ void main() {
     test('Deleting a note without an ID throws an error', () async {
       expect(
         () => storage.delete(
-          Note(title: 'Missing ID', body: 'Test'),
+          Note(title: 'Missing ID', body: 'Test', created: DateTime.utc(2026),
+        modified: DateTime.utc(2026)),
         ),
         throwsArgumentError,
       );

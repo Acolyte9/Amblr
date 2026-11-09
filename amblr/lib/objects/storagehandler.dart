@@ -60,10 +60,10 @@ class StorageHandler {
           'id': id as int,
           'title': title as String,
           'body': body as String,
-          'created': created as DateTime,
-          'modified': modified as DateTime,
+          'created': created as String,
+          'modified': modified as String,
           } in notes)
-          Note(id: id, title: title, body: body, created: created, modified: modified),
+          Note(id: id, title: title, body: body, created: DateTime.parse(created), modified: DateTime.parse(modified)),
       ];
     }
 
@@ -126,7 +126,7 @@ class Note {
 
   Map<String, Object?> toMap() {
     return 
-    {'title': title, 'body': body, 'created': created, 'modified': modified};
+    {'title': title, 'body': body, 'created': created.toString(), 'modified': modified.toString()};
   }
 
   factory Note.fromMap(Map<String, Object?> map)
