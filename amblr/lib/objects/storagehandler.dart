@@ -15,7 +15,7 @@ class StorageHandler {
       );
     }
 
-     static Future<void> createSchema(Database db, int version) async {
+    static Future<void> createSchema(Database db, int version) async {
         await db.execute(
           '''
           CREATE TABLE notes(
@@ -27,8 +27,15 @@ class StorageHandler {
         );
       }   
 
+    ///database parameter can be left null, exists to allow database injecting for testing purposes
     StorageHandler({Future<Database>? database}) : DB = database ?? initDatabase();
 
+
+    ///Inserts a Note object into database
+    ///
+    ///Returns an integer - the primary key id of that note
+    ///
+    ///HEAVILY RECOMMENDED - set the Note's id field to this return variable immediately after
     Future<int> insert(Note note) async {
       var db = await DB;
       return await db.insert(
@@ -38,6 +45,11 @@ class StorageHandler {
       );
     }
 
+    ///Returns a list of all Note objects inside the database
+    ///
+    ///TODO: 
+    ///Add way to sort (either through SQLite syntax or other means)
+    ///Add pagination & lazy loading
     Future<List<Note>> getNotes() async {
       var db = await DB;
       final List<Map<String, Object?>> notes = await db.query('notes');
@@ -47,6 +59,9 @@ class StorageHandler {
       ];
     }
 
+    ///Updates an existing Note object inside the database
+    ///
+    ///Returns an int for number of changes made (should only be 1)
     Future<int> update(Note note) async {
       if(note.id == null)
       {
@@ -61,6 +76,9 @@ class StorageHandler {
       );
     }
 
+    ///Deletes an existing Note object inside the database
+    ///
+    ///Returns an int for number of changes made (should only be 1)
     Future<int> delete(Note note) async {
       if(note.id == null)
       {
@@ -74,6 +92,9 @@ class StorageHandler {
       );
     }
 
+    ///Closes the database
+    ///
+    ///Only really needed for testing purposes
     Future<void> close() async {
       var db = await DB;
       db.close();
@@ -82,10 +103,12 @@ class StorageHandler {
 
 class Note {
   int? id;
-  final String title;
-  final String body;
+  String? title;
+  String? body;
 
-  Note({this.id, required this.title, required this.body});
+  //Add extra metadata (Date created, Date modified, Length of body?, etc)
+
+  Note({this.id, this.title, this.body});
 
   void setId(int id_)
   {
