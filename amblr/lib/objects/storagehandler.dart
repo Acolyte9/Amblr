@@ -4,66 +4,105 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class StorageHandler {
-    static late final Database db;
-    StorageHandler() {
-      initDatabase();
-    }
-    static Future<Database> initDatabase() async {
-      if(db.path.isEmpty)
-      {
-        db = await openDatabase(
-          join(await getDatabasesPath(), 'storage.db'),
-          onCreate: (db, version) {
-            return db.execute('CREATE TABLE notes(id INTEGER PRIMARY KEY, title STRING, body STRING)'
-            );
-          },
-          version: 1,
-        );
-      }
-      return db;
+    final Future<Database> DB;
+    static Future<Database> initDatabase({String? path}) async {
+      final dbPath = path ?? join(await getDatabasesPath(), 'storage.db');
+
+      return openDatabase(
+        dbPath,
+        onCreate: createSchema,
+        version: 1,
+      );
     }
 
-    static Future<void> insert(Note note) async {
-      await db.insert(
+     static Future<void> createSchema(Database db, int version) async {
+        await db.execute(
+          '''
+          CREATE TABLE notes(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            body TEXT NOT NULL
+          )
+          '''
+        );
+      }   
+
+    StorageHandler({Future<Database>? database}) : DB = database ?? initDatabase();
+
+    Future<int> insert(Note note) async {
+      var db = await DB;
+      return await db.insert(
         'notes',
         note.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace
       );
     }
 
-    static Future<List<Note>> getNotes() async {
+    Future<List<Note>> getNotes() async {
+      var db = await DB;
       final List<Map<String, Object?>> notes = await db.query('notes');
       return [
-        for(final {'title': title as String, 'body': body as String} in notes)
-          Note(title: title, body: body),
+        for(final {'id': id as int, 'title': title as String, 'body': body as String} in notes)
+          Note(id: id, title: title, body: body),
       ];
     }
 
-    static Future<void> update(Note note) async {
-      await db.update(
+    Future<int> update(Note note) async {
+      if(note.id == null)
+      {
+        throw ArgumentError.notNull();
+      }
+      var db = await DB;
+      return await db.update(
         'notes',
         note.toMap(),
-        where: 'title = ?',
-        whereArgs: [note.title]
+        where: 'id = ?',
+        whereArgs: [note.id]
       );
     }
 
-    static Future<void> delete(Note note) async {
-      await db.delete(
+    Future<int> delete(Note note) async {
+      if(note.id == null)
+      {
+        throw ArgumentError.notNull();
+      }
+      var db = await DB;
+      return await db.delete(
         'notes',
-        where: 'title = ?',
-        whereArgs: [note.title]
+        where: 'id = ?',
+        whereArgs: [note.id]
       );
+    }
+
+    Future<void> close() async {
+      var db = await DB;
+      db.close();
     }
 }
 
 class Note {
+  int? id;
   final String title;
   final String body;
 
-  Note({required this.title, required this.body});
+  Note({this.id, required this.title, required this.body});
+
+  void setId(int id_)
+  {
+    id = id_;
+  }
 
   Map<String, Object?> toMap() {
-    return {'title': title, 'body': body};
+    return 
+    {'title': title, 'body': body};
+  }
+
+  factory Note.fromMap(Map<String, Object?> map)
+  {
+    return Note(
+      id: map['id'] as int,
+      title: map['title'] as String,
+      body: map['body'] as String
+    );
   }
 }
