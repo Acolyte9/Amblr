@@ -21,7 +21,9 @@ class StorageHandler {
           CREATE TABLE notes(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            body TEXT NOT NULL
+            body TEXT NOT NULL,
+            created STRING NOT NULL,
+            modified STRING NOT NULL
           )
           '''
         );
@@ -54,8 +56,14 @@ class StorageHandler {
       var db = await DB;
       final List<Map<String, Object?>> notes = await db.query('notes');
       return [
-        for(final {'id': id as int, 'title': title as String, 'body': body as String} in notes)
-          Note(id: id, title: title, body: body),
+        for(final {
+          'id': id as int,
+          'title': title as String,
+          'body': body as String,
+          'created': created as DateTime,
+          'modified': modified as DateTime,
+          } in notes)
+          Note(id: id, title: title, body: body, created: created, modified: modified),
       ];
     }
 
@@ -105,10 +113,11 @@ class Note {
   int? id;
   String? title;
   String? body;
+  DateTime? created;
+  DateTime? modified;
 
   //Add extra metadata (Date created, Date modified, Length of body?, etc)
-
-  Note({this.id, this.title, this.body});
+  Note({this.id, this.title, this.body, this.created, this.modified});
 
   void setId(int id_)
   {
@@ -117,7 +126,7 @@ class Note {
 
   Map<String, Object?> toMap() {
     return 
-    {'title': title, 'body': body};
+    {'title': title, 'body': body, 'created': created, 'modified': modified};
   }
 
   factory Note.fromMap(Map<String, Object?> map)
@@ -125,7 +134,9 @@ class Note {
     return Note(
       id: map['id'] as int,
       title: map['title'] as String,
-      body: map['body'] as String
+      body: map['body'] as String,
+      created: DateTime.parse(map['created'] as String),
+      modified: DateTime.parse(map['modified'] as String)
     );
   }
 }
