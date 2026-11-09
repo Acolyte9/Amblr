@@ -36,15 +36,18 @@ class StorageHandler {
     ///Inserts a Note object into database
     ///
     ///Returns an integer - the primary key id of that note
-    ///
-    ///HEAVILY RECOMMENDED - set the Note's id field to this return variable immediately after
+    ///Automatically assigns the note with its new id
+    
     Future<int> insert(Note note) async {
       var db = await DB;
-      return await db.insert(
+      int res = await db.insert(
         'notes',
         note.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace
       );
+      note.id = res;
+
+      return res;
     }
 
     ///Returns a list of all Note objects inside the database
