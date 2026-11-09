@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:amblr/objects/note.dart';
+import 'package:amblr/objects/storagehandler.dart';
 
 class DocumentEditorScreen extends StatefulWidget {
   // final String documentId;
-  final String documentName;
+  final Note document;
+  final StorageHandler storage;
 
   const DocumentEditorScreen({
     super.key,
     // required this.documentId,
-    required this.documentName,
+    required this.document,
+    required this.storage,
   });
 
   @override
@@ -26,7 +30,7 @@ class _DocumentEditorScreenState extends State<DocumentEditorScreen> {
   @override
   void initState() {
     super.initState();
-    titleController.text = widget.documentName;
+    titleController.text = (widget.document.title).toString();
   }
 
   @override
@@ -45,33 +49,41 @@ class _DocumentEditorScreenState extends State<DocumentEditorScreen> {
         : titleController.text.trim();
     titleController.text = title;
 
-    // try {
-    //   await storage.updateDocument(
-    //     widget.documentId,
-    //     title: title,
-    //     content: textController.text,
-    //   );
+    try {
+      await widget.storage.update(
+        // widget.documentId,
+        Note(
+          body: textController.text, 
+          id: widget.document.id, 
+          title: title, 
+          created: widget.document.created,
+          modified: DateTime.now(),
+          )
+        
+        // widget.document.title = title,
+        // content: textController.text,
+      );
 
-    //   if (!mounted) return;
+      if (!mounted) return;
 
-    //   titleController.text = title;
+      titleController.text = title;
 
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Document saved!')),
-    //   );
-    // } catch (error) {
-    //   if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Document saved!')),
+      );
+    } catch (error) {
+      if (!mounted) return;
 
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('Could not save document: $error')),
-    //   );
-    // } finally {
-    //   if (mounted) {
-    //     setState(() {
-    //       isSaving = false;
-    //     });
-    //   }
-    // }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not save document: $error')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          isSaving = false;
+        });
+      }
+    }
   }
 
   @override
