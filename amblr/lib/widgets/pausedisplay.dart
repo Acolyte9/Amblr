@@ -1,6 +1,6 @@
 // import 'dart:async';
 import 'package:amblr/objects/note.dart';
-// import 'package:amblr/objects/storagehandler.dart';
+import 'package:amblr/objects/storagehandler.dart';
 import 'package:amblr/pages/finishwalkpage.dart';
 import 'package:flutter/material.dart';
 // import 'package:amblr/objects/accelerationcheck.dart';
@@ -28,6 +28,47 @@ class AmblrPauseDisplay extends StatefulWidget {
 class PauseDisplayState extends State<AmblrPauseDisplay> {
   // late Timer _timer;
 
+  void saveDocument() {
+    // try 
+    // {
+      StorageHandler storage = StorageHandler();
+      // await 
+      storage.update(
+        // widget.documentId,
+        Note(
+          body: widget.document.body, 
+          id: widget.document.id, 
+          title: widget.document.title, 
+          created: DateTime.now(),
+          modified: DateTime.now(),
+          )
+        
+        // widget.document.title = title,
+        // content: textController.text,
+      );
+
+      // if (!mounted) return;
+
+      // titleController.text = title;
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Document saved!')),
+      // );
+      // } catch (error) {
+      //   if (!mounted) return;
+
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text('Could not save document: $error')),
+      //   );
+      // } finally {
+      //   if (mounted) {
+      //     setState(() {
+      //       isSaving = false;
+      //     });
+      //   }
+      // }
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +79,7 @@ class PauseDisplayState extends State<AmblrPauseDisplay> {
             key: const Key("HomepageButton"),
             style: ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20), backgroundColor: Colors.green),
             onPressed: () {
+              saveDocument();
               Navigator.pushAndRemoveUntil(
                 context, 
                 MaterialPageRoute<void>(

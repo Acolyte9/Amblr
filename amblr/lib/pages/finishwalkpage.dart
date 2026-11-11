@@ -1,19 +1,32 @@
 import 'package:amblr/objects/note.dart';
-import 'package:amblr/objects/storagehandler.dart';
+// import 'package:amblr/objects/storagehandler.dart';
 import 'package:amblr/pages/frontpage.dart';
 import 'package:flutter/material.dart';
 import 'editpage.dart';
 
 class Finishwalkpage extends StatelessWidget {
   final Note document;
-  final StorageHandler storage;
-  
+  // final StorageHandler storage;
   const Finishwalkpage({
     super.key,
     required this.document,
-    required this.storage,
+    // required this.storage,
   });
+
+  // StorageHandler storage = StorageHandler();
+  // storage.update(
+  //   Note(
+  //     body: document.body, 
+  //     id: document.id, 
+  //     title: document.title, 
+  //     created: DateTime.now(),
+  //     modified: DateTime.now(),
+  //   ));
+
   
+  // });
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +45,10 @@ class Finishwalkpage extends StatelessWidget {
                   },
                 )
               );
+              // Navigator.popUntil(
+              //   context,
+              //   ModalRoute.withName('/frontpage')
+              //   );
             },
             child: const Text('Finish'),
           ),
@@ -43,7 +60,7 @@ class Finishwalkpage extends StatelessWidget {
                 context,
                 MaterialPageRoute<void>(
                   builder: (context) {
-                    return DocumentEditorScreen(document: document, storage: storage);
+                    return DocumentEditorScreen(document: document);
                   },
                 )
               );

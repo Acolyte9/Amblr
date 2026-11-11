@@ -29,7 +29,10 @@ class _WalkingpageState extends State<Walkingpage> {
   void initState() {
     super.initState();
 
-    _pausedisplay = AmblrPauseDisplay();
+    _pausedisplay = AmblrPauseDisplay(document: ,);
+    // ^^^^^This needs to use whatever document has been created by the text-to-speech
+    // Since the speech-to-text should be halted while the walkingpage is paused,
+    // this only needs to have a copy of whatever has been recorded thus far
 
     _accelerometerSubscription = accelerometerEventStream().listen((event) {
       _accelerometerValues = [event];

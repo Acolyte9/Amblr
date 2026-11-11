@@ -1,4 +1,4 @@
-// import 'package:to_dont_list/objects/item.dart';
+import 'package:amblr/objects/note.dart';
 import 'package:amblr/objects/storagehandler.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 class AmblrDeleteCheck extends StatefulWidget {
   const AmblrDeleteCheck({
     super.key,
-    required this.id,
+    required this.note,
     required this.storage,
   });
 
-  final String id;
+  final Note note;
   final StorageHandler storage;
   // final (SOME KIND OF LIST OF FILES OR WAY TO INTERACT WITH SAVED FILES);
 
@@ -52,7 +52,7 @@ class _AmblrDeleteCheckState extends State<AmblrDeleteCheck> {
           style: yesStyle,
           onPressed: () {
             setState(() {
-              // widget.storage.deleteDocument(widget.id);
+              widget.storage.delete(widget.note);
               // ^^^^^^^^^^^^^THIS IS WHERE THE DELETING HAPPENS
               Navigator.pop(context);
             });

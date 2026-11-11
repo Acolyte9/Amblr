@@ -7,7 +7,7 @@ import 'package:amblr/widgets/deletecheck.dart';
 class NotesList extends StatefulWidget {
   NotesList({super.key});
   
-  StorageHandler storage = StorageHandler();
+  final StorageHandler storage = StorageHandler();
 
   @override
   State<NotesList> createState() => _NotesListState(storage);
@@ -16,15 +16,15 @@ class NotesList extends StatefulWidget {
 class _NotesListState extends State<NotesList> {
   // Sample notes so the screen shows something during the prototype.
   final List<Note> notes = [
-    const Note(
-        id: "1",
+    new Note(
+        id: 1,
         title: "Walk by the lake",
         body: "Ideas for my essay intro...",
         // date: "Nov 2, 2026",
         // timeRange: "3:10 - 5:00 PM"
         ),
-    const Note(
-        id: "2",
+    new Note(
+        id: 2,
         title: "Morning Walk",
         body: "Thoughts on the project...",
         // date: "Nov 1, 2026",
@@ -40,7 +40,7 @@ class _NotesListState extends State<NotesList> {
     showDialog(
       context: context,
       builder: (_) {
-        return AmblrDeleteCheck(id: note.id, storage: storage,);
+        return AmblrDeleteCheck(note: note, storage: storage,);
       },
     );
   }
@@ -63,7 +63,7 @@ class _NotesListState extends State<NotesList> {
                 backgroundColor: Color(0xFF4F7942),
                 child: Icon(Icons.directions_walk, color: Colors.white),
               ),
-              title: Text(note.title),
+              title: Text(note.title.toString()),
               // subtitle: Text('${note.date}  •  ${note.timeRange}'),
               onTap: () {
                 // Later: open the note to view and edit it
