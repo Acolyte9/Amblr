@@ -5,13 +5,13 @@ import 'package:amblr/objects/storagehandler.dart';
 class DocumentEditorScreen extends StatefulWidget {
   // final String documentId;
   final Note document;
-  final StorageHandler storage;
+  final StorageHandler storage = StorageHandler();
 
-  const DocumentEditorScreen({
+  DocumentEditorScreen({
     super.key,
     // required this.documentId,
     required this.document,
-    required this.storage,
+    // required this.storage,
   });
 
   @override
