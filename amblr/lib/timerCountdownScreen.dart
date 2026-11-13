@@ -1,42 +1,28 @@
-import 'dart:async';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
-import 'timerScreen.dart';
-import 'main.dart';
 
+class TimerCountDownScreen extends StatefulWidget {
+  const TimerCountDownScreen({super.key});
 
-
-class timerCountDownScreen extends StatefulWidget {
-  const timerCountDownScreen({super.key});
   @override
-    State<timerCountDownScreen> createState(){
-
-      return _timerCountDownScreenState();
-    }
-    class _timerCountDownScreenState extends State<timerCountDownscreen> {
-
-      int timerRange = 300;
-      int startTimer = 5;
-      bool isRunning = False;
-
-      // if timerRange>0{ 
-   //timerRange-=1;
-
-    //}
-   // else{
-     // isRunning = false;
-
-     @override
-      Widget build(BuildContext context) {
-        return Scaffold();
-        Title: 'Timer Count Down',
-        //Start 
-
-        //Pause
-
-      }
-
-
+  State<TimerCountDownScreen> createState() {
+    return _TimerCountDownScreenState();
+  }
 }
 
+class _TimerCountDownScreenState extends State<TimerCountDownScreen> {
+  int remainingSeconds = 300;
+  bool isRunning = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Walking Timer'),
+      ),
+      body: const Center(
+        child: Text('Countdown Timer'),
+      ),
+    );
+  }
 }
