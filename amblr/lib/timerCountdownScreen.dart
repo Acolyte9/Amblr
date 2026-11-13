@@ -14,14 +14,27 @@ class _TimerCountDownScreenState extends State<TimerCountDownScreen> {
   int remainingSeconds = 300;
   bool isRunning = false;
 
+  String formatTime() {
+  int minutes = remainingSeconds ~/ 60;
+  int seconds = remainingSeconds % 60;
+
+  return '${minutes.toString().padLeft(2, '0')}:'
+      '${seconds.toString().padLeft(2, '0')}';
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Walking Timer'),
       ),
-      body: const Center(
-        child: Text('Countdown Timer'),
+      body: Center(
+  child: Text(
+    formatTime(),
+    style: const TextStyle(
+      fontSize: 60,
+      fontWeight: FontWeight.bold,
+      ),),
       ),
     );
   }
