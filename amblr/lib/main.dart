@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'pages/frontpage.dart';
 
 void main() {
@@ -11,6 +10,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: Frontpage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.green,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 20,
+            ),
+            textStyle: const TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
+      home: const Frontpage(),
+    );
   }
 }
