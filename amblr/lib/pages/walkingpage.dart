@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 import 'package:amblr/objects/accelerationcheck.dart';
+import 'package:amblr/objects/note.dart';
 import 'package:amblr/widgets/pausedisplay.dart';
 
 class Walkingpage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _WalkingpageState extends State<Walkingpage> {
   late Timer _timer;
 
   bool pauseup = false;
+  String _document = '';
   late final AmblrPauseDisplay _pausedisplay;
 
   late StreamSubscription<AccelerometerEvent> _accelerometerSubscription;
@@ -29,10 +31,12 @@ class _WalkingpageState extends State<Walkingpage> {
   void initState() {
     super.initState();
 
-    _pausedisplay = AmblrPauseDisplay(document: ,);
-    // ^^^^^This needs to use whatever document has been created by the text-to-speech
-    // Since the speech-to-text should be halted while the walkingpage is paused,
-    // this only needs to have a copy of whatever has been recorded thus far
+    _pausedisplay = AmblrPauseDisplay(
+      document: Note(title: '', body: _document),
+    );
+    // TODO: pass the current transcribed document here instead of the empty string.
+    // The speech-to-text should pause while the walking page is paused, so this only
+    // needs a snapshot of the content recorded so far.
 
     _accelerometerSubscription = accelerometerEventStream().listen((event) {
       _accelerometerValues = [event];
@@ -81,7 +85,16 @@ class _WalkingpageState extends State<Walkingpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const Text('New Brainstorming')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('New Brainstorming'),
+        flexibleSpace: const FlexibleSpaceBar(
+          background: Image(
+            image: AssetImage('assets/FirstPicExample.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
