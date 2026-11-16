@@ -1,9 +1,19 @@
+import 'package:amblr/objects/note.dart';
+import 'package:amblr/objects/storagehandler.dart';
 import 'package:flutter/material.dart';
 
 import 'walkingpage.dart';
 
-class Frontpage extends StatelessWidget {
+class Frontpage extends StatefulWidget {
   const Frontpage({super.key});
+
+  @override
+  State<Frontpage> createState() => FrontClassExtension();
+}
+
+class FrontClassExtension extends State<Frontpage> {
+  final storage = StorageHandler();
+  late Future<List<Note>> notesFuture = storage.getNotes();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +81,46 @@ class Frontpage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           color: Color.fromARGB(255, 48, 74, 1),
+                        ),
+                      ),
+                      Expanded(
+                        child: FutureBuilder<List<Note>>(
+                          future: notesFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Text('Could not load notes.'),
+                              );
+                            }
+
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            final notes = snapshot.data!;
+                            if (notes.isEmpty) {
+                              return const Center(
+                                child: Text('No saved brainstorms yet.'),
+                              );
+                            }
+
+                            return ListView(
+                              padding: EdgeInsets.zero,
+                              children: [
+                                for (final note in notes)
+                                  ListTile(
+                                    title: Text(note.title ?? ''),
+                                    subtitle: Text(
+                                      note.body ?? '',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
                         ),
                       ),
                     ],
