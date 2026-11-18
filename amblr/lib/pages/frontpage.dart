@@ -94,10 +94,10 @@ class FrontClassExtension extends State<Frontpage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Start Walking\nBrainstorming',
+                                'Start Walking Brainstorming',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 23,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

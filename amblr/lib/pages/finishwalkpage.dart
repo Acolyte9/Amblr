@@ -2,7 +2,10 @@ import 'package:amblr/objects/note.dart';
 // import 'package:amblr/objects/storagehandler.dart';
 import 'package:amblr/pages/frontpage.dart';
 import 'package:flutter/material.dart';
+
 import 'editpage.dart';
+
+import 'package:amblr/pages/walkingpage.dart';
 
 class Finishwalkpage extends StatelessWidget {
   final Note document;
@@ -16,16 +19,14 @@ class Finishwalkpage extends StatelessWidget {
   // StorageHandler storage = StorageHandler();
   // storage.update(
   //   Note(
-  //     body: document.body, 
-  //     id: document.id, 
-  //     title: document.title, 
+  //     body: document.body,
+  //     id: document.id,
+  //     title: document.title,
   //     created: DateTime.now(),
   //     modified: DateTime.now(),
   //   ));
 
-  
   // });
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +36,18 @@ class Finishwalkpage extends StatelessWidget {
           const Text('Paused'),
           ElevatedButton(
             key: const Key("HomepageButton"),
-            style: ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20), backgroundColor: Colors.grey),
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.grey,
+            ),
             onPressed: () {
               Navigator.pushReplacement(
-                context, 
+                context,
                 MaterialPageRoute<void>(
                   builder: (context) {
                     return Frontpage();
                   },
-                )
+                ),
               );
               // Navigator.popUntil(
               //   context,
@@ -54,7 +58,10 @@ class Finishwalkpage extends StatelessWidget {
           ),
           ElevatedButton(
             key: const Key("EditpageButton"),
-            style: ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20), backgroundColor: Colors.grey),
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.grey,
+            ),
             onPressed: () {
               Navigator.push<void>(
                 context,
@@ -62,13 +69,13 @@ class Finishwalkpage extends StatelessWidget {
                   builder: (context) {
                     return DocumentEditorScreen(document: document);
                   },
-                )
+                ),
               );
             },
             child: const Text('Edit'),
           ),
-        ]
-      )
+        ],
+      ),
     );
   }
 }

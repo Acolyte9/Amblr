@@ -3,8 +3,8 @@ import 'package:amblr/objects/note.dart';
 import 'package:amblr/objects/storagehandler.dart';
 import 'package:amblr/pages/finishwalkpage.dart';
 import 'package:flutter/material.dart';
-// import 'package:amblr/objects/accelerationcheck.dart';
 
+// import 'package:amblr/objects/accelerationcheck.dart';
 
 class AmblrPauseDisplay extends StatefulWidget {
   final Note document;
@@ -22,81 +22,93 @@ class AmblrPauseDisplay extends StatefulWidget {
   // }
 
   @override
-  State<StatefulWidget> createState() => PauseDisplayState();  
+  State<StatefulWidget> createState() => PauseDisplayState();
 }
 
 class PauseDisplayState extends State<AmblrPauseDisplay> {
   // late Timer _timer;
 
   void saveDocument() {
-    // try 
+    // try
     // {
-      StorageHandler storage = StorageHandler();
-      // await 
-      storage.update(
-        // widget.documentId,
-        Note(
-          body: widget.document.body, 
-          id: widget.document.id, 
-          title: widget.document.title, 
-          created: DateTime.now(),
-          modified: DateTime.now(),
-          )
-        
-        // widget.document.title = title,
-        // content: textController.text,
-      );
+    StorageHandler storage = StorageHandler();
+    // await
+    storage.update(
+      // widget.documentId,
+      Note(
+        body: widget.document.body,
+        id: widget.document.id,
+        title: widget.document.title,
+        created: DateTime.now(),
+        modified: DateTime.now(),
+      ),
 
-      // if (!mounted) return;
+      // widget.document.title = title,
+      // content: textController.text,
+    );
 
-      // titleController.text = title;
+    // if (!mounted) return;
 
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Document saved!')),
-      // );
-      // } catch (error) {
-      //   if (!mounted) return;
+    // titleController.text = title;
 
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('Could not save document: $error')),
-      //   );
-      // } finally {
-      //   if (mounted) {
-      //     setState(() {
-      //       isSaving = false;
-      //     });
-      //   }
-      // }
-    }
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(content: Text('Document saved!')),
+    // );
+    // } catch (error) {
+    //   if (!mounted) return;
+
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Could not save document: $error')),
+    //   );
+    // } finally {
+    //   if (mounted) {
+    //     setState(() {
+    //       isSaving = false;
+    //     });
+    //   }
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const Text('Paused'),
-          ElevatedButton(
-            key: const Key("HomepageButton"),
-            style: ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20), backgroundColor: Colors.green),
-            onPressed: () {
-              saveDocument();
-              Navigator.pushAndRemoveUntil(
-                context, 
-                MaterialPageRoute<void>(
-                  builder: (context) {
-                    return Finishwalkpage(document: widget.document);
-                  },
-                ),
-                ModalRoute.withName('/'),
-              );
-            },
-            child: const Text('Finish'),
-          ),
-        ]
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Paused'),
+
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Resume'),
+            ),
+
+            const SizedBox(height: 12),
+            ElevatedButton(
+              key: const Key("HomepageButton"),
+              style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(fontSize: 20),
+                backgroundColor: Colors.green,
+              ),
+              onPressed: () {
+                saveDocument();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => Finishwalkpage(document: widget.document),
+                  ),
+                  ModalRoute.withName('/'),
+                );
+              },
+              child: const Text('Finish'),
+            ),
+          ],
+        ),
       ),
     );
   }
-  
+
   // void unpause() {
   //   Navigator.pop(context);
   // }
