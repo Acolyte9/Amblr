@@ -13,7 +13,7 @@ class AmblrDeleteCheck extends StatefulWidget {
     required this.storage,
   });
 
-  final Note note;
+  final int id;
   final StorageHandler storage;
   // final (SOME KIND OF LIST OF FILES OR WAY TO INTERACT WITH SAVED FILES);
 
