@@ -52,6 +52,13 @@ void startCountdown() {
   );
 }
 
+void pauseCountdown() {
+  timer?.cancel();
+
+  setState(() {
+    isRunning = false;
+  });
+}
 @override
 void dispose() {
   timer?.cancel();
@@ -81,12 +88,24 @@ Widget build(BuildContext context) {
           ),
         ),
         const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: isRunning || remainingSeconds == 0
-              ? null
-              : startCountdown,
-          child: const Text('Start'),
-        ),
+        Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    ElevatedButton(
+      onPressed: isRunning || remainingSeconds == 0
+          ? null
+          : startCountdown,
+      child: Text(
+        remainingSeconds == 300 ? 'Start' : 'Resume',
+      ),
+    ),
+    const SizedBox(width: 12),
+    ElevatedButton(
+      onPressed: isRunning ? pauseCountdown : null,
+      child: const Text('Pause'),
+    ),
+  ],
+),
       ],
     ),
   );
