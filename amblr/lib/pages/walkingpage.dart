@@ -1,6 +1,7 @@
 import 'dart:async';
 
 // import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+import 'package:amblr/objects/speechhandler.dart';
 import 'package:amblr/pages/finishwalkpage.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -17,13 +18,15 @@ class Walkingpage extends StatefulWidget {
 }
 
 class _WalkingpageState extends State<Walkingpage> {
+  StringBuffer spokenWords = StringBuffer();
+  final SpeechRecognition sr = SpeechRecognition();
   final Accelcheck accelcheck = Accelcheck();
 
   List<AccelerometerEvent> _accelerometerValues = [];
   late Timer _timer;
 
   bool pauseup = false;
-  String _document = '';
+  //String _document = '';
   late final AmblrPauseDisplay _pausedisplay;
 
   late StreamSubscription<AccelerometerEvent> _accelerometerSubscription;
@@ -32,8 +35,10 @@ class _WalkingpageState extends State<Walkingpage> {
   void initState() {
     super.initState();
 
+    sr.addSubscriber(onSpeechRecognized);
+    sr.startListening();
     _pausedisplay = AmblrPauseDisplay(
-      document: Note(title: '', body: _document),
+      document: Note(title: '', body: spokenWords.toString()),
     );
     // TODO: pass the current transcribed document here instead of the empty string.
     // The speech-to-text should pause while the walking page is paused, so this only
@@ -49,6 +54,13 @@ class _WalkingpageState extends State<Walkingpage> {
     });
   }
 
+  void onSpeechRecognized()
+  {
+    setState(() {
+      spokenWords.write(sr.getLastPartialText());
+    });
+  }
+
   void _checkAccel() {
     if (_accelerometerValues.isEmpty) return;
 
@@ -58,6 +70,7 @@ class _WalkingpageState extends State<Walkingpage> {
     if (accelcheck.isStill()) {
       if (!pauseup) {
         pauseup = true;
+        sr.pauseListening();
         Navigator.push<void>(
           context,
           MaterialPageRoute<void>(
@@ -71,6 +84,7 @@ class _WalkingpageState extends State<Walkingpage> {
       }
     } else {
       if (pauseup) {
+        sr.startListening();
         Navigator.pop(context);
       }
     }
