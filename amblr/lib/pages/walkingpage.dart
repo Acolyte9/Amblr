@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:amblr/timerCountdownScreen.dart';
 // import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 import 'package:amblr/pages/finishwalkpage.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +94,7 @@ class _WalkingpageState extends State<Walkingpage> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
       ),
+      body: const TimerCountDownScreen(),
     );
   }
 }
