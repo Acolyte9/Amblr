@@ -79,7 +79,8 @@ class FrontClassExtension extends State<Frontpage> {
                     ),
                     const SizedBox(height: 30),
                     Center(
-                      child: SizedBox(
+                      child: Builder(
+                        builder: (context) => SizedBox(
                         height: 70,
                         child: ElevatedButton(
                           onPressed: () {
@@ -107,6 +108,7 @@ class FrontClassExtension extends State<Frontpage> {
                           ),
                         ),
                       ),
+                    ),
                     ),
                   ],
                 ),
