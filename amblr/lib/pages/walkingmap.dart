@@ -120,7 +120,6 @@ class _WalkingMapState extends State<WalkingMap> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
@@ -150,6 +149,28 @@ class _WalkingMapState extends State<WalkingMap> {
             ),
           ],
         ),
+
+        // Shows a small green dot for every GPS position
+        // collected during the walking session.
+        MarkerLayer(
+          markers: walkingPath.map((point) {
+            return Marker(
+              point: point,
+              width: 12,
+              height: 12,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
          // Show a blue marker once the user's location is found.
         if (currentLocation != null)
           MarkerLayer(
@@ -166,6 +187,30 @@ class _WalkingMapState extends State<WalkingMap> {
               ),
             ],
           ),
+
+        // Shows how many GPS coordinates have been recorded.
+        // This helps us test whether location tracking is working.
+        RichAttributionWidget(
+          attributions: [
+            TextSourceAttribution('OpenStreetMap contributors'),
+          ],
+        ),
+        // Displays the number of collected GPS points on the map.
+        Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
+            color: Colors.white,
+            child: Text(
+              'GPS points: ${walkingPath.length}',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
