@@ -156,15 +156,15 @@ class _WalkingMapState extends State<WalkingMap> {
           markers: walkingPath.map((point) {
             return Marker(
               point: point,
-              width: 12,
-              height: 12,
+              width: 24,
+              height: 24,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.orange,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Colors.white,
-                    width: 2,
+                    width: 3,
                   ),
                 ),
               ),
