@@ -20,6 +20,8 @@ class _WalkingMapState extends State<WalkingMap> {
 
   // Stores the user's location after GPS finds it.
   LatLng? currentLocation;
+    // Stores the GPS coordinates collected during the walking session.
+  List<LatLng> walkingPath = [];
 
     @override
     void initState() {
