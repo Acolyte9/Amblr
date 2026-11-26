@@ -8,6 +8,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'package:amblr/objects/accelerationcheck.dart';
 import 'package:amblr/objects/note.dart';
 import 'package:amblr/widgets/pausedisplay.dart';
+import 'package:amblr/pages/walkingmap.dart';
 
 class Walkingpage extends StatefulWidget {
   const Walkingpage({super.key});
@@ -94,7 +95,21 @@ class _WalkingpageState extends State<Walkingpage> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
       ),
-      body: const TimerCountDownScreen(),
+      // it displays the walking map above the countdown timer.
+      // Expanded gives more space to the map while keeping
+      // the timer visible at the bottom of the walking page.
+      body: const Column(
+  children: [
+    Expanded(
+      flex: 2,
+      child: WalkingMap(),
+    ),
+    Expanded(
+      flex: 1,
+      child: TimerCountDownScreen(),
+    ),
+  ],
+),
     );
   }
 }
