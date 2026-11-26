@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 // Provides access to GPS coordinates and location permissions.
 import 'package:geolocator/geolocator.dart';
+import 'dart:async';
 // This widget displays the map that users will see during
 // their walking brainstorming session.
 //will use it to show their location and walking path later
@@ -20,8 +21,10 @@ class _WalkingMapState extends State<WalkingMap> {
 
   // Stores the user's location after GPS finds it.
   LatLng? currentLocation;
-    // Stores the GPS coordinates collected during the walking session.
+  // Stores the GPS coordinates collected during the walking session.
   List<LatLng> walkingPath = [];
+  // Stores the GPS listener so we can stop it when the map closes.
+  StreamSubscription<Position>? positionSubscription;
 
     @override
     void initState() {
@@ -64,9 +67,50 @@ class _WalkingMapState extends State<WalkingMap> {
       );
     });
 
-    // Move the map to the user's current location.
+    // Moves the map to the user's current location.
     mapController.move(currentLocation!, 16);
+    // Start collecting GPS updates after location permission is granted.
+    startLocationTracking();
   }
+
+   // Starts listening for GPS updates while the walking map is open.
+   // Each new location is added to the walkingPath list.
+  void startLocationTracking() {
+    // Avoid starting multiple GPS listeners.
+    if (positionSubscription != null) return;
+
+    // Request location updates when the device moves.
+    const LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 5,
+    );
+
+    positionSubscription = Geolocator.getPositionStream(
+      locationSettings: locationSettings,
+    ).listen(
+      (Position position) {
+        // Stop updating if this widget has been closed.
+        if (!mounted) return;
+
+        // Convert the GPS coordinates into a map point.
+        final LatLng newPoint = LatLng(
+          position.latitude,
+          position.longitude,
+        );
+
+        // Save the new location and add it to the walking path.
+        setState(() {
+          currentLocation = newPoint;
+          walkingPath.add(newPoint);
+        });
+      },
+      onError: (Object error) {
+        // Log GPS errors so we can diagnose tracking problems.
+        debugPrint('Location tracking error: $error');
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +152,9 @@ class _WalkingMapState extends State<WalkingMap> {
 
   @override
   void dispose() {
-    // Release the map controller when this widget closes.
+    // Stops listening for GPS updates when the walking map closes
+    positionSubscription?.cancel();
     mapController.dispose();
     super.dispose();
-  }
+}
 }
