@@ -140,6 +140,7 @@ class _WalkingMapState extends State<WalkingMap> {
           userAgentPackageName: 'amblr',
         ),
         // Draws a green line connecting the GPS points collected while the user walks.
+        if (walkingPath.length >= 2)
         PolylineLayer(
           polylines: [
             Polyline(
@@ -159,7 +160,7 @@ class _WalkingMapState extends State<WalkingMap> {
                 height: 40,
                 child: const Icon(
                   Icons.location_on,
-                  color: Colors.blue,
+                  color: Colors.green,
                   size: 40,
                 ),
               ),
