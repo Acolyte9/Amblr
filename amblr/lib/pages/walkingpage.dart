@@ -98,10 +98,12 @@ class _WalkingpageState extends State<Walkingpage> {
       // it displays the walking map above the countdown timer.
       // Expanded gives more space to the map while keeping
       // the timer visible at the bottom of the walking page.
-      body: const Column(
-  children: [
+    body: const Column(
+    children: [
+      //it displays the map in the upper half of the screen.
     Expanded(
-      flex: 2,
+      //// changed flex to 1 to give the countdown more room so its buttons are visible.
+      flex: 1,
       child: WalkingMap(),
     ),
     Expanded(
