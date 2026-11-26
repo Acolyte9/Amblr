@@ -55,8 +55,17 @@ class _WalkingMapState extends State<WalkingMap> {
       return;
     }
 
-    // Get the user's current latitude and longitude.
-    Position position = await Geolocator.getCurrentPosition();
+
+    // Try to get the user's current position.
+    // If GPS fails print an error
+    Position position;
+
+    try {
+      position = await Geolocator.getCurrentPosition();
+}     catch (error) {
+        debugPrint('Could not get current location: $error');
+        return;
+    }
 
     if (!mounted) return;
 
@@ -118,7 +127,7 @@ class _WalkingMapState extends State<WalkingMap> {
         // Connects the controller to center the map
        mapController: mapController,
        // Set the starting location and zoom level of the map.
-      // used conway temporarily until I add live GPS location.
+        // used conway temporarily until I add live GPS location.
       options: const MapOptions(
         initialCenter: LatLng(35.0887, -92.4421),
         initialZoom: 15,
@@ -129,6 +138,16 @@ class _WalkingMapState extends State<WalkingMap> {
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'amblr',
+        ),
+        // Draws a green line connecting the GPS points collected while the user walks.
+        PolylineLayer(
+          polylines: [
+            Polyline(
+              points: walkingPath,
+              strokeWidth: 4,
+              color: Colors.green,
+            ),
+          ],
         ),
          // Show a blue marker once the user's location is found.
         if (currentLocation != null)
