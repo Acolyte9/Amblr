@@ -99,6 +99,18 @@ class StorageHandler {
     return await db.delete('notes', where: 'id = ?', whereArgs: [note.id]);
   }
 
+  ///Deletes an object by id
+  ///returns -1 for invalid id
+  ///be very careful with what ids get sent in, this is only temporary until we decide how to handle deletecheck
+  Future<int> delete_by_id(int id) async {
+    if(id == 0)
+      return -1;
+    
+    
+    var db = await DB;
+    return await db.delete('notes', where: 'id = ?', whereArgs: [id]);
+  }
+
   ///Closes the database
   ///
   ///Only really needed for testing purposes

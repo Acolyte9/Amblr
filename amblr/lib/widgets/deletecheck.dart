@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class AmblrDeleteCheck extends StatefulWidget {
   const AmblrDeleteCheck({
     super.key,
-    required this.note,
+    required this.id,
     required this.storage,
   });
 
@@ -52,7 +52,7 @@ class _AmblrDeleteCheckState extends State<AmblrDeleteCheck> {
           style: yesStyle,
           onPressed: () {
             setState(() {
-              widget.storage.delete(widget.note);
+              widget.storage.delete_by_id(widget.id);
               // ^^^^^^^^^^^^^THIS IS WHERE THE DELETING HAPPENS
               Navigator.pop(context);
             });
