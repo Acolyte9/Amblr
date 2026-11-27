@@ -84,6 +84,14 @@ class FrontClassExtension extends State<Frontpage> {
                         builder: (context) => SizedBox(
                         height: 70,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF245C46),
+                          foregroundColor: Colors.white,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          ),
+                       ),
                           onPressed: () {
                             Navigator.push(
                               context,
