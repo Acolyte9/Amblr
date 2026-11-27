@@ -72,10 +72,34 @@ class FrontClassExtension extends State<Frontpage> {
                   children: [
                     const Text(
                       'Amblr',
-                      style: TextStyle(
-                        fontSize: 80,
-                        fontWeight: FontWeight.bold,
+                       style: TextStyle(
+                        fontSize: 64,
+                        fontWeight: FontWeight.w800,
                         color: Colors.white,
+                        letterSpacing: -2,
+                        shadows: [
+                          Shadow(
+                          color: Colors.black54,
+                          blurRadius: 12,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                     ),
+                    ),
+                    // Short description of what the app helps users do.
+                    const Text(
+                    'Brainstorm while Walking',
+                     style: TextStyle(
+                     fontSize: 20,
+                     fontWeight: FontWeight.w500,
+                     color: Colors.white,
+                     letterSpacing: 1,
+                     shadows: [
+                      Shadow(
+                      color: Colors.black54,
+                      blurRadius: 8,
+                        ),
+                       ],
                       ),
                     ),
                     const SizedBox(height: 30),
