@@ -29,6 +29,7 @@ class FrontClassExtension extends State<Frontpage> {
         ),
       ),
       home: Scaffold(
+        backgroundColor: const Color(0xFFF8F8F2),
         appBar: AppBar(
           flexibleSpace: Image.asset(
             'assets/FirstPicExample.jpg',
